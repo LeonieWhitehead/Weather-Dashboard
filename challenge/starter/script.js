@@ -54,28 +54,30 @@ function getCoordinates(city) {
 function getWeather(coordinates) {
   const queryURL = `https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=imperial`;
 
-  
+
   fetch(queryURL)
-  .then(response => response.json())
-  .then(data => {
-        // Log the queryURL
-        console.log("Query URL:", queryURL);
-        console.log(data);
+    .then(response => response.json())
+    .then(data => {
+      // Convert temperature from Fahrenheit to Celsius
+      const temperatureCelsius = ((data.main.temp - 32) * 5) / 9;
+      // Log the queryURL
+      console.log("Query URL:", queryURL);
+      console.log(data);
 
-        // Update the current weather card
-      updateCurrentWeatherCard(data);
-      })
-      .catch(error => console.error("Error getting weather data:", error));
-  }
+      // Update the current weather card
+      updateCurrentWeatherCard(data, temperatureCelsius);
+    })
+    .catch(error => console.error("Error getting weather data:", error));
+}
 
-  function updateCurrentWeatherCard(data) {
-      // Update HTML elements
+function updateCurrentWeatherCard(data, temperatureCelsius) {
+  // Update HTML elements
   locationElement.text(data.name);
   dateElement.text(dayjs().format('MMMM D, YYYY'));
   iconElement.attr('src', `https://openweathermap.org/img/w/${data.weather[0].icon}.png`);
-   // Convert temperature from Fahrenheit to Celsius
-   const temperatureCelsius = ((data.main.temp - 32) * 5) / 9;
-   temperatureElement.text(`${temperatureCelsius.toFixed(2)} °C`);
+  // Convert temperature from Fahrenheit to Celsius
+  temperatureCelsius = ((data.main.temp - 32) * 5) / 9;
+  temperatureElement.text(`${temperatureCelsius.toFixed(2)} °C`);
   windElement.text(`${data.wind.speed} mph`);
   humidityElement.text(`${data.main.humidity}%`);
 }
@@ -95,4 +97,23 @@ function getForecast(coordinates) {
     })
     .catch(error => console.error("Error getting forecast data:", error));
 
+}
+
+function updateForecastCards(data, elements) {
+  elements.forEach((element, index) => {
+    const date = dayjs.unix(data[index].dt).format('MMMM D, YYYY');
+    const iconURL = `https://openweathermap.org/img/w/${data[index].weather[0].icon}.png`;
+    const temperature = data[index].temp.day;
+    const wind = data[index].wind_speed;
+    const humidity = data[index].humidity;
+
+    // Convert temperature from Fahrenheit to Celsius for each forecast card
+    const temperatureCelsiusForCard = ((temperature - 32) * 5) / 9;
+
+    $(`.${element}-date`).text(date);
+    $(`.${element}-icon`).attr('src', iconURL);
+    $(`.${element}-temp`).text(`Temp: ${temperatureCelsiusForCard.toFixed(2)} °C`)
+    $(`.${element}-wind`).text(`Wind: ${wind} mph`);
+    $(`.${element}-humidity`).text(`Humidity: ${humidity}%`);
+  })
 }
