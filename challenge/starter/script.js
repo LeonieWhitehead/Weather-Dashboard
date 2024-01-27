@@ -8,6 +8,11 @@ const todaySection = $('#today');
 const forecastSection = $('#forecast');
 const historyList = $('#history');
 const currentWeatherCard = $('#current-weather-card');
+const dateElement = $('#date');
+const iconElement = $('#icon');
+const temperatureElement = $('#temperature');
+const windElement = $('#wind');
+const humidityElement = $('#humidity');
 
 // let currentCity;
 let cityHistory = [];
@@ -46,13 +51,12 @@ function getCoordinates(city) {
 
 // Function to get weather data
 function getWeather(coordinates) {
-   const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
+  const queryURL = `https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=imperial`;
+
   
   fetch(queryURL)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
+  .then(response => response.json())
+  .then(data => {
         // Log the queryURL
         console.log("Query URL:", queryURL);
         console.log(data);
@@ -60,10 +64,9 @@ function getWeather(coordinates) {
         // Update the current weather card
       updateCurrentWeatherCard(data);
       })
-      .catch(function (error) {
-        console.error("Error getting weather data:", error);
-  });
-}
+      .catch(error => console.error("Error getting weather data:", error));
+  }
+
 
 //what is needed for search section; input field, button
 
