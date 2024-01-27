@@ -8,6 +8,7 @@ const todaySection = $('#today');
 const forecastSection = $('#forecast');
 const historyList = $('#history');
 const currentWeatherCard = $('#current-weather-card');
+const locationElement = $('#location');
 const dateElement = $('#date');
 const iconElement = $('#icon');
 const temperatureElement = $('#temperature');
@@ -67,7 +68,17 @@ function getWeather(coordinates) {
       .catch(error => console.error("Error getting weather data:", error));
   }
 
-
+  function updateCurrentWeatherCard(data) {
+      // Update HTML elements
+  locationElement.text(data.name);
+  dateElement.text(dayjs().format('MMMM D, YYYY'));
+  iconElement.attr('src', `https://openweathermap.org/img/w/${data.weather[0].icon}.png`);
+   // Convert temperature from Fahrenheit to Celsius
+   const temperatureCelsius = ((data.main.temp - 32) * 5) / 9;
+   temperatureElement.text(`${temperatureCelsius.toFixed(2)} °C`);
+  windElement.text(`${data.wind.speed} mph`);
+  humidityElement.text(`${data.main.humidity}%`);
+}
 //what is needed for search section; input field, button
 
 //what is needed for current day weather card; location, date, icon, temp, wind and humidity
