@@ -24,6 +24,22 @@ searchForm.on('submit', function (event) {
       .catch(error => console.error("Error:", error));
   }
 });
+
+// Function to get coordinates for a city
+function getCoordinates(city) {
+  const coordinatesURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+
+  return fetch(coordinatesURL)
+    .then(response => response.json())
+    .then(data => {
+      const coordinates = {
+        lat: data.coord.lat,
+        lon: data.coord.lon
+      };
+      return coordinates;
+    })
+    .catch(error => console.error("Error getting coordinates:", error));
+}
 // // Function to get weather data
 
 // function getWeather(data) {
