@@ -7,8 +7,11 @@ const searchInput = $('#search-input');
 const todaySection = $('#today');
 const forecastSection = $('#forecast');
 const historyList = $('#history');
+const currentWeatherCard = $('#current-weather-card');
 
 // let currentCity;
+let cityHistory = [];
+
 
 // Event listener for form submission
 searchForm.on('submit', function (event) {
@@ -40,23 +43,27 @@ function getCoordinates(city) {
     })
     .catch(error => console.error("Error getting coordinates:", error));
 }
-// // Function to get weather data
 
-// function getWeather(data) {
-//   const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
+// Function to get weather data
+function getWeather(coordinates) {
+   const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
   
-//   fetch(queryURL)
-//     .then(function (response) {
-//       return response.json();
-//     })
-//     .then(function (data) {
-//         // Log the queryURL
-//         console.log("Query URL:", queryURL);
-//         console.log(data);
-//       })
-//       .catch(function (error) {
-//   });
-// }
+  fetch(queryURL)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+        // Log the queryURL
+        console.log("Query URL:", queryURL);
+        console.log(data);
+
+        // Update the current weather card
+      updateCurrentWeatherCard(data);
+      })
+      .catch(function (error) {
+        console.error("Error getting weather data:", error);
+  });
+}
 
 //what is needed for search section; input field, button
 
