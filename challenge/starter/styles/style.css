@@ -1,8 +1,92 @@
-/* @import url(); */
-body{
-  background: white;
+
+body {
+  font-family: 'Roboto', sans-serif;
 }
 
-.card{
-  background-color: navy;
+.weather-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-label {
+  color: #bdbdbd;
+}
+
+.form-input {
+  border: none;
+  border-radius: 3px 0 0 3px;
+  padding: 0.375rem 0.75rem;
+  background-color: #f5f5f5;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  width: 100%;
+}
+
+.search-button {
+  border: none;
+  border-radius: 0 3px 3px 0;
+  padding: 0.375rem 0.75rem;
+  background-color: #28a745;
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.search-button:hover {
+  background-color: #218838;
+}
+
+.weather-hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 0.5rem 0;
+}
+
+#history {
+  margin-top: 1rem;
+}
+
+#today {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#forecast {
+  padding-left: 1rem;
+}
+
+#fiveDayForecastHeading {
+  margin-bottom: 1rem;
+}
+
+#fiveDayForecast .col-lg-2 {
+  margin-bottom: 1rem;
+}
+
+#fiveDayForecast .card {
+  border: none;
+  background-color: #f5f5f5;
+}
+
+#fiveDayForecast .card-body {
+  padding: 0.5rem;
+}
+
+#fiveDayForecast .card-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #212529;
+  text-align: center;
+}
+
+#fiveDayForecast .card-text {
+  font-size: 0.75rem;
+  color: #868e96;
+  text-align: center;
+}
+
+@media (max-width: 991.98px) {
+  #today,
+  #forecast {
+    border: none;
+  }
 }
