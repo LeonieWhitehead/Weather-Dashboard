@@ -8,25 +8,39 @@ const todaySection = $('#today');
 const forecastSection = $('#forecast');
 const historyList = $('#history');
 
-let currentCity;
+// let currentCity;
 
-// Function to get weather data
-
-function getWeather(data) {
-  const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
-  
-  fetch(queryURL)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-        // Log the queryURL
-        console.log("Query URL:", queryURL);
-        console.log(data);
+// Event listener for form submission
+searchForm.on('submit', function (event) {
+  event.preventDefault();
+  const city = searchInput.val().trim();
+  if (city !== '') {
+    // Get coordinates for the city
+    getCoordinates(city)
+      .then(coordinates => {
+        // Use coordinates to get weather data
+        getWeather(coordinates);
       })
-      .catch(function (error) {
-  });
-}
+      .catch(error => console.error("Error:", error));
+  }
+});
+// // Function to get weather data
+
+// function getWeather(data) {
+//   const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
+  
+//   fetch(queryURL)
+//     .then(function (response) {
+//       return response.json();
+//     })
+//     .then(function (data) {
+//         // Log the queryURL
+//         console.log("Query URL:", queryURL);
+//         console.log(data);
+//       })
+//       .catch(function (error) {
+//   });
+// }
 
 //what is needed for search section; input field, button
 
