@@ -79,11 +79,20 @@ function getWeather(coordinates) {
   windElement.text(`${data.wind.speed} mph`);
   humidityElement.text(`${data.main.humidity}%`);
 }
-//what is needed for search section; input field, button
 
-//what is needed for current day weather card; location, date, icon, temp, wind and humidity
+function getForecast(coordinates) {
+  const forecastURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&exclude=minutely,hourly,alerts&appid=${apiKey}&units=imperial`;
 
-//what sections are on each card; date, icon, temp, wind and humidity
-// const dateEl = $("#date");
-// const currentWeatherEl = $("#date");
+  fetch(forecastURL)
+    .then(response => response.json())
+    .then(data => {
+      // Log the queryURL
+      console.log("Forecast URL:", forecastURL);
+      console.log(data);
 
+      // Update the 5-day forecast cards
+      updateForecastCards(data.daily.slice(1, 6), ['day1', 'day2', 'day3', 'day4', 'day5']);
+    })
+    .catch(error => console.error("Error getting forecast data:", error));
+
+}
