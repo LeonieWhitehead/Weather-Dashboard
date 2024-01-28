@@ -1,3 +1,4 @@
+$(document).ready(function() {
 //API
 const apiKey = "4d259587f0ac609bbd27b9095095a860";
 
@@ -29,10 +30,47 @@ searchForm.on('submit', function (event) {
       .then(coordinates => {
         // Use coordinates to get weather data
         getWeather(coordinates);
+
+        // Add the searched city to history
+        addToHistory(city);
       })
       .catch(error => console.error("Error:", error));
   }
 });
+
+ // Function to add a city to the history
+ function addToHistory(city) {
+  // Add the city to the history array
+  cityHistory.push(city);
+
+  // Limit the history array to a certain number of elements (e.g., 5)
+  if (cityHistory.length > 5) {
+    cityHistory.shift(); // Remove the oldest entry
+  }
+
+  // Update the history list in the HTML
+  updateHistoryList();
+}
+
+// Function to update the history list in the HTML
+function updateHistoryList() {
+  // Clear the existing history list
+  historyList.empty();
+
+  // Add buttons for each city in the history array
+  cityHistory.forEach(city => {
+    const historyButton = $('<button>')
+      .addClass('history-button')
+      .text(city)
+      .on('click', function () {
+        // When a history button is clicked, perform a new search for that city
+        searchInput.val(city);
+        searchForm.trigger('submit');
+      });
+
+    historyList.append(historyButton);
+  });
+}
 
 // Function to get coordinates for a city
 function getCoordinates(city) {
@@ -117,3 +155,4 @@ function updateForecastCards(data, elements) {
     $(`.${element}-humidity`).text(`Humidity: ${humidity}%`);
   })
 }
+})

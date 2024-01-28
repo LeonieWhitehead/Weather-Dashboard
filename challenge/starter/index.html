@@ -19,6 +19,7 @@
   <!-- max-width for ultra wide resolutions -->
   <div class="container-fluid" style="max-width: 1400px">
     <div class="row">
+      <!-- Left-hand sidebar for search -->
       <aside class="col-lg-3 pb-3">
         <h2 id="form-heading" class="mt-1 h3 form-label">
           Search for a City:
@@ -37,99 +38,102 @@
             </div>
           </div>
         </form>
-        <div class="list-group" id="history"></div>
+        <div class="list-group" id="history">
+          <!-- history list content here... -->
+        </div>
       </aside>
-  </div>
-
-  <main class="container-fluid" style="max-width: 1400px">
-    <div class="row">
-      <section id="today" class="col-lg-9 mt-3" role="region" aria-live="polite">
-        <!-- today's weather content -->
-        <div id="current-weather-card" class="card">
-          <div class="card-body">
-            <h3 id="location" class="card-title"></h3>
-            <p id="date" class="card-text"></p>
-            <img id="icon" class="weather-icon" alt="Weather Icon">
-            <p id="temperature" class="card-text"></p>
-            <p id="wind" class="card-text"></p>
-            <p id="humidity" class="card-text"></p>
-          </div>
-        </div>
-      </section>
-
-      <section id="forecast" class="col-lg-9 mt-3" role="region" aria-live="polite">
-        <div id="fiveDayForecastHeading" class="row">
-          <h2>5-Day Forecast:</h2>
-        </div>
-        <div id="fiveDayForecast" class="row">
-          <div class="col-md-4">
-            <div class="card" id="day1">
-              <div id="five-day-weather-card" class="card">
-                <div class="card-body">
-                  <p id="date" class="card-text"></p>
-                  <img id="icon" class="weather-icon" alt="Weather Icon">
-                  <p id="temperature" class="card-text"></p>
-                  <p id="wind" class="card-text"></p>
-                  <p id="humidity" class="card-text"></p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card" id="day2">
-              <div id="five-day-weather-card" class="card">
-                <div class="card-body">
-                  <p id="date" class="card-text"></p>
-                  <img id="icon" class="weather-icon" alt="Weather Icon">
-                  <p id="temperature" class="card-text"></p>
-                  <p id="wind" class="card-text"></p>
-                  <p id="humidity" class="card-text"></p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card" id="day3">
-              <div class="five-day-weather-card card-body">
-                <p class="card-text"></p>
-                <img class="weather-icon" alt="Weather Icon">
-                <p class="card-text">temp</p>
-                <p class="card-text">wind</p>
-                <p class="card-text">humidity</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card" id="day4">
-              <div class="five-day-weather-card card-body">
-                <p class="card-text"></p>
-                  <img class="weather-icon" alt="Weather Icon">
-                <p class="card-text">temp</p>
-                <p class="card-text">wind</p>
-                <p class="card-text">humidity</p>
-                </div>
-              </div>
-            </div>
-          <div class="col-md-4">
-            <div class="card" id="day5">
-              <div class="five-day-weather-card card-body">
-              <p class="card-text"></p>
-              <img class="weather-icon" alt="Weather Icon">
-              <p class="card-text">temp</p>
-              <p class="card-text">wind</p>
-              <p class="card-text">humidity</p>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
-  </main>
 
-  <!-- Day.js -->
-  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-  <!-- jQuery -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="script.js"></script>
+    <main class="container-fluid" style="max-width: 1400px">
+      <div class="row">
+        <section id="today" class="col-lg-9 mt-3" role="region" aria-live="polite">
+          <!-- today's weather content -->
+          <div id="current-weather-card" class="card">
+            <div class="card-body">
+              <h3 id="location" class="card-title"></h3>
+              <p id="date" class="card-text"></p>
+              <img id="icon" class="weather-icon" alt="Weather Icon">
+              <p id="temperature" class="card-text"></p>
+              <p id="wind" class="card-text"></p>
+              <p id="humidity" class="card-text"></p>
+            </div>
+          </div>
+        </section>
+
+        <section id="forecast" class="row" role="region" aria-live="polite">
+          <div id="fiveDayForecastHeading" class="col-12">
+            <h2>5-Day Forecast:</h2>
+          </div>
+          <div id="fiveDayForecast" class="row">
+            <!-- 5-day forecast cards content here -->
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-text" id="day1-date"></p>
+                  <img class="weather-icon" alt="Weather Icon" id="day1-icon">
+                  <p class="card-text" id="day1-temperature"></p>
+                  <p class="card-text" id="day1-wind"></p>
+                  <p class="card-text" id="day1-humidity"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-text" id="day2-date"></p>
+                  <img class="weather-icon" alt="Weather Icon" id="day2-icon">
+                  <p class="card-text" id="day2-temperature"></p>
+                  <p class="card-text" id="day2-wind"></p>
+                  <p class="card-text" id="day2-humidity"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-text" id="day3-date"></p>
+                  <img class="weather-icon" alt="Weather Icon" id="day3-icon">
+                  <p class="card-text" id="day3-temperature"></p>
+                  <p class="card-text" id="day3-wind"></p>
+                  <p class="card-text" id="day3-humidity"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-text" id="day4-date"></p>
+                  <img class="weather-icon" alt="Weather Icon" id="day4-icon">
+                  <p class="card-text" id="day4-temperature"></p>
+                  <p class="card-text" id="day4-wind"></p>
+                  <p class="card-text" id="day4-humidity"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-text" id="day5-date"></p>
+                  <img class="weather-icon" alt="Weather Icon" id="day5-icon">
+                  <p class="card-text" id="day5-temperature"></p>
+                  <p class="card-text" id="day5-wind"></p>
+                  <p class="card-text" id="day5-humidity"></p>
+                </div>
+              </div>
+            </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Day.js -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
