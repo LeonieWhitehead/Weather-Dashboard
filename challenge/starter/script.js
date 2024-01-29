@@ -1,6 +1,5 @@
-$(document).ready(function() {
 //API
-const apiKey = "4d259587f0ac609bbd27b9095095a860";
+const apiKey = "e986b04b35ee7c9c4a0262bfa1992a02";
 
 //Pull elements from the HTML
 const searchForm = $('#search-form');
@@ -19,57 +18,8 @@ const humidityElement = $('#humidity');
 // let currentCity;
 let cityHistory = [];
 
-
-// Event listener for form submission
-searchForm.on('submit', function (event) {
-  event.preventDefault();
-  const city = searchInput.val().trim();
-  if (city !== '') {
-    // Get coordinates for the city
-    getCoordinates(city)
-      .then(coordinates => {
-        // Use coordinates to get weather data
-        getWeather(coordinates);
-
-        // Add the searched city to history
-        addToHistory(city);
-      })
-      .catch(error => console.error("Error:", error));
-  }
-});
-
- // Function to add a city to the history
- function addToHistory(city) {
-  // Add the city to the history array
-  cityHistory.push(city);
-
-  // Limit the history array to a certain number of elements (e.g., 5)
-  if (cityHistory.length > 5) {
-    cityHistory.shift(); // Remove the oldest entry
-  }
-
-  // Update the history list in the HTML
-  updateHistoryList();
-}
-
-// Function to update the history list in the HTML
-function updateHistoryList() {
-  // Clear the existing history list
-  historyList.empty();
-
-  // Add buttons for each city in the history array
-  cityHistory.forEach(city => {
-    const historyButton = $('<button>')
-      .addClass('history-button')
-      .text(city)
-      .on('click', function () {
-        // When a history button is clicked, perform a new search for that city
-        searchInput.val(city);
-        searchForm.trigger('submit');
-      });
-
-    historyList.append(historyButton);
-  });
+function saveCityHistory() {
+  localStorage.setItem('cityHistory', JSON.stringify(cityHistory));
 }
 
 // Function to get coordinates for a city
@@ -87,7 +37,17 @@ function getCoordinates(city) {
     })
     .catch(error => console.error("Error getting coordinates:", error));
 }
-
+function updateCurrentWeatherCard(data, temperatureCelsius) {
+  // Update HTML elements
+  locationElement.text(data.name);
+  dateElement.text(dayjs().format('MMMM D, YYYY'));
+  iconElement.attr('src', `https://openweathermap.org/img/w/${data.weather[0].icon}.png`);
+  // Convert temperature from Fahrenheit to Celsius
+  temperatureCelsius = ((data.main.temp - 32) * 5) / 9;
+  temperatureElement.text(`${temperatureCelsius.toFixed(2)} °C`);
+  windElement.text(`${data.wind.speed} mph`);
+  humidityElement.text(`${data.main.humidity}%`);
+}
 // Function to get weather data
 function getWeather(coordinates) {
   const queryURL = `https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=imperial`;
@@ -107,17 +67,28 @@ function getWeather(coordinates) {
     })
     .catch(error => console.error("Error getting weather data:", error));
 }
+function updateForecastCards(data, elements) {
+  if (data && Array.isArray(data.daily)) {
+    console.log("5-day forecast data:", data);
+    elements.forEach((element, index) => {
+      const date = dayjs.unix(data[index].dt).format('MMMM D, YYYY');
+      const iconURL = `https://openweathermap.org/img/w/${data[index].weather[0].icon}.png`;
+      const temperature = data[index].temp.day;
+      const wind = data[index].wind_speed;
+      const humidity = data[index].humidity;
 
-function updateCurrentWeatherCard(data, temperatureCelsius) {
-  // Update HTML elements
-  locationElement.text(data.name);
-  dateElement.text(dayjs().format('MMMM D, YYYY'));
-  iconElement.attr('src', `https://openweathermap.org/img/w/${data.weather[0].icon}.png`);
-  // Convert temperature from Fahrenheit to Celsius
-  temperatureCelsius = ((data.main.temp - 32) * 5) / 9;
-  temperatureElement.text(`${temperatureCelsius.toFixed(2)} °C`);
-  windElement.text(`${data.wind.speed} mph`);
-  humidityElement.text(`${data.main.humidity}%`);
+      // Convert temperature from Fahrenheit to Celsius for each forecast card
+      const temperatureCelsiusForCard = ((temperature - 32) * 5) / 9;
+
+      $(`.${element}-date`).text(date);
+      $(`.${element}-icon`).attr('src', iconURL);
+      $(`.${element}-temp`).text(`Temp: ${temperatureCelsiusForCard.toFixed(2)} °C`)
+      $(`.${element}-wind`).text(`Wind: ${wind} mph`);
+      $(`.${element}-humidity`).text(`Humidity: ${humidity}%`);
+    });
+  } else {
+    console.error("Error: Forecast data is undefined or not an array.");
+  }
 }
 
 function getForecast(coordinates) {
@@ -137,22 +108,62 @@ function getForecast(coordinates) {
 
 }
 
-function updateForecastCards(data, elements) {
-  elements.forEach((element, index) => {
-    const date = dayjs.unix(data[index].dt).format('MMMM D, YYYY');
-    const iconURL = `https://openweathermap.org/img/w/${data[index].weather[0].icon}.png`;
-    const temperature = data[index].temp.day;
-    const wind = data[index].wind_speed;
-    const humidity = data[index].humidity;
+// Event listener for form submission
+searchForm.on('submit', function (event) {
+  event.preventDefault();
+  const city = searchInput.val().trim();
+  if (city !== '') {
+    // Get coordinates for the city
+    getCoordinates(city)
+      .then(coordinates => {
+        // Use coordinates to get weather data
+        getWeather(coordinates);
+        // Add the searched city to history
+        addToHistory(city);
+        // Get 5-day forecast for the city
+        getForecast(coordinates);
+      })
+      .catch(error => console.error("Error:", error));
+  }
+});
 
-    // Convert temperature from Fahrenheit to Celsius for each forecast card
-    const temperatureCelsiusForCard = ((temperature - 32) * 5) / 9;
+// Function to add a city to the history
+function addToHistory(city) {
+  // Add the city to the history array
+  cityHistory.push(city);
 
-    $(`.${element}-date`).text(date);
-    $(`.${element}-icon`).attr('src', iconURL);
-    $(`.${element}-temp`).text(`Temp: ${temperatureCelsiusForCard.toFixed(2)} °C`)
-    $(`.${element}-wind`).text(`Wind: ${wind} mph`);
-    $(`.${element}-humidity`).text(`Humidity: ${humidity}%`);
-  })
+  if (cityHistory.length > 5) {
+    cityHistory.shift(); // Remove the oldest entry
+  }
+  // Update the history list in the HTML
+  updateHistoryList();
+  saveCityHistory();
 }
-})
+
+// Function to update the history list in the HTML
+function updateHistoryList() {
+  // Clear the existing history list
+  historyList.empty();
+
+  // Add buttons for each city in the history array
+  cityHistory.forEach(city => {
+    const historyButton = $('<button>')
+      .addClass('history-button')
+      .text(city)
+      .on('click', function () {
+        // When a history button is clicked, perform a new search for that city
+        searchInput.val(city);
+        searchForm.trigger('submit');
+      });
+
+      historyList.append(historyButton);
+    });
+  }
+$(document).ready(function () {
+        // Load cityHistory from local storage if available
+        const storedCityHistory = localStorage.getItem('cityHistory');
+        if (storedCityHistory) {
+          cityHistory = JSON.parse(storedCityHistory);
+          updateHistoryList();
+        }
+      });

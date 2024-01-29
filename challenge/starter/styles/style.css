@@ -1,92 +1,34 @@
-/* 
 body {
-  font-family: 'Roboto', sans-serif;
-}
-
-.weather-header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.form-label {
-  color: #bdbdbd;
-}
-
-.form-input {
-  border: none;
-  border-radius: 3px 0 0 3px;
-  padding: 0.375rem 0.75rem;
-  background-color: #f5f5f5;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #495057;
-  width: 100%;
-}
-
-/* .search-button { */
-  border: none;
-  border-radius: 0 3px 3px 0;
-  padding: 0.375rem 0.75rem;
-  background-color: #28a745;
   color: #fff;
-  font-size: 1rem;
-  line-height: 1.5;
+  overflow-x: hidden;
+  height: 100%;
+  background-color: #CFD8DC;
+  background-repeat: no-repeat;
 }
 
-.search-button:hover {
-  background-color: #218838;
+.card {
+  background-image: url("https://i.imgur.com/dpqZJV5.jpg");
+  background-size: cover;
+  width: 600px;
+  height: 350px;
+  border-radius: 20px;
+  box-shadow: 0px 8px 16px 4px #9E9E9E;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
-.weather-hr {
-  border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  margin: 0.5rem 0;
+.time-font {
+  font-size: 50px;
 }
 
-#history {
-  margin-top: 1rem;
+.sm-font {
+  font-size: 18px;
 }
 
-#today {
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
+.med-font {
+  font-size: 28px;
 }
 
-#forecast {
-  padding-left: 1rem;
+.large-font {
+  font-size: 60px;
 }
-
-#fiveDayForecastHeading {
-  margin-bottom: 1rem;
-}
-
-#fiveDayForecast .col-lg-2 {
-  margin-bottom: 1rem;
-}
-
-#fiveDayForecast .card {
-  border: none;
-  background-color: #f5f5f5;
-}
-
-#fiveDayForecast .card-body {
-  padding: 0.5rem;
-}
-
-#fiveDayForecast .card-title {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #212529;
-  text-align: center;
-}
-
-#fiveDayForecast .card-text {
-  font-size: 0.75rem;
-  color: #868e96;
-  text-align: center;
-}
-
-@media (max-width: 991.98px) {
-  #today,
-  #forecast {
-    border: none;
-  }
-} */
