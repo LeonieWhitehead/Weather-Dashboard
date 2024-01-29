@@ -7,14 +7,22 @@ body {
 }
 
 .card {
-  background-image: url("https://i.imgur.com/dpqZJV5.jpg");
-  background-size: cover;
+  background: rgb(34, 193, 195);
+  background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
   width: 600px;
   height: 350px;
   border-radius: 20px;
   box-shadow: 0px 8px 16px 4px #9E9E9E;
   margin-top: 50px;
   margin-bottom: 50px;
+}
+
+.card-body {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 0 0 20px 20px;
+  /* Rounded bottom corners */
+  padding: 20px;
+  
 }
 
 .time-font {
@@ -31,4 +39,57 @@ body {
 
 .large-font {
   font-size: 60px;
+}
+
+#fiveDayForecast {
+  display: flex;
+  justify-content: space-between;
+}
+
+.weather-icon {
+  width: 100px;
+}
+
+/* Colour styles for the header */
+.weather-header {
+  background-color: rgb(34, 193, 195, 1);
+
+}
+
+.weather-header h1 {
+  color: white;
+  
+}
+
+.weather-search {
+  border: 1px solid #ced4da;
+}
+
+.search-button {
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+  color: #fff;
+}
+
+.history-button {
+  background-color:  rgb(222, 225, 225);
+  color: black;
+  border: 1px solid black;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Colour styles for history list */
+.list-group-item {
+  background-color: #f8f9fa;
+}
+
+.list-group-item:hover {
+  background-color: #e9ecef;
 }
