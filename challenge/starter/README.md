@@ -30,7 +30,9 @@ The Weather Dashboard is a web application that allows users to search for the c
 
 ## Screenshot
 ![Screenshot ](./challenge/assets/Screenshot%202024-01-30%20215208.png)
+
 ## URL
+https://leoniewhitehead.github.io/Weather-Dashboard/
 
 ## Technologies Used
 - HTML
