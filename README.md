@@ -29,7 +29,7 @@ The Weather Dashboard is a web application that allows users to search for the c
 - The history section displays the previously searched cities.
 
 ## Screenshot
-
+![Screenshot ](./challenge/assets/Screenshot%202024-01-30%20215208.png)
 ## URL
 
 ## Technologies Used
