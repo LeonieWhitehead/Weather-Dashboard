@@ -1,6 +1,8 @@
 //API
 const apiKey = "e986b04b35ee7c9c4a0262bfa1992a02";
 
+
+
 //Pull elements from the HTML
 const searchForm = $('#search-form');
 const searchInput = $('#search-input');
@@ -68,7 +70,7 @@ function getWeather(coordinates) {
     .catch(error => console.error("Error getting weather data:", error));
 }
 function updateForecastCards(data, elements) {
-  if (data && Array.isArray(data.daily)) {
+  if (data && Array.isArray(data[index].dt).format('MMMM D, YYYY')) {
     console.log("5-day forecast data:", data);
     elements.forEach((element, index) => {
       const date = dayjs.unix(data[index].dt).format('MMMM D, YYYY');
@@ -92,8 +94,8 @@ function updateForecastCards(data, elements) {
 }
 
 function getForecast(coordinates) {
-  const forecastURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&exclude=minutely,hourly,alerts&appid=${apiKey}&units=imperial`;
-
+  const forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${coordinates.lat}&lon=${coordinates.lon}&exclude=minutely,hourly,alerts&appid=${apiKey}&units=imperial`;
+  console.log(forecastURL)
   fetch(forecastURL)
     .then(response => response.json())
     .then(data => {
@@ -102,7 +104,7 @@ function getForecast(coordinates) {
       console.log(data);
 
       // Update the 5-day forecast cards
-      updateForecastCards(data.daily.slice(1, 6), ['day1', 'day2', 'day3', 'day4', 'day5']);
+      updateForecastCards(data.list, ['day1', 'day2', 'day3', 'day4', 'day5']);
     })
     .catch(error => console.error("Error getting forecast data:", error));
 
